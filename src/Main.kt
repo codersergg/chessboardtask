@@ -17,7 +17,7 @@ class Chessboard(
         for (move in figureSteps) {
             val nextX = currentPosition.x + move.x
             val nextY = currentPosition.y + move.y
-            if (isValidPosition(nextX, nextY) && board[nextX][nextY] == -1) {
+            if (isValidStep(nextX, nextY)) {
                 board[nextX][nextY] = stepNumber + 1
                 if (findSolution(Position(nextX, nextY), stepNumber + 1)) {
                     return true
@@ -36,6 +36,8 @@ class Chessboard(
             println()
         }
     }
+
+    private fun isValidStep(nextX: Int, nextY: Int) = isValidPosition(nextX, nextY) && board[nextX][nextY] == -1
 
     private fun isValidPosition(x: Int, y: Int): Boolean = x in 0..<size && y in 0..<size
 }
