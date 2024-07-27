@@ -13,14 +13,14 @@ class Chessboard(
 
     fun findSolution(currentPosition: Position = startPosition, stepNumber: Int = 1): Boolean {
         if (stepNumber == size * size) return true
-        figureSteps
-            .map { Position(currentPosition.x + it.x, currentPosition.y + it.y) }
+        return figureSteps
+            .map { currentPosition + it }
             .filter { isValidStep(it) }
-            .forEach {
+            .any {
                 if (findSolution(it, board.step(it, stepNumber))) return true
                 board.backStep(it)
+                false
             }
-        return false
     }
 
     fun print() {
@@ -40,6 +40,10 @@ class Chessboard(
 
     private fun Array<IntArray>.backStep(p: Position) {
         this[p.x][p.y] = -1
+    }
+
+    private operator fun Position.plus(p: Position): Position {
+        return Position(this.x + p.x, this.y + p.y)
     }
 
     private fun isValidStep(p: Position) =
