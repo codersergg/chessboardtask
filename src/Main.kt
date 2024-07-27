@@ -6,7 +6,7 @@ class Chessboard(
     private val board: Array<IntArray> = Array(size) { IntArray(size) { -1 } }
 
     init {
-        board[startPosition.x][startPosition.y] = 1
+        board.step(Position(startPosition.x, startPosition.y), 0)
         println("Start $startPosition")
         println()
     }
