@@ -13,14 +13,12 @@ class Chessboard(
 
     fun findSolution(currentPosition: Position = startPosition, stepNumber: Int = 1): Boolean {
         if (stepNumber == size * size) return true
-
         figureSteps
             .map { Position(currentPosition.x + it.x, currentPosition.y + it.y) }
-            .filter { isValidStep(it.x, it.y) }
+            .filter { isValidStep(it) }
             .forEach {
-                board[it.x][it.y] = stepNumber + 1
-                if (findSolution(Position(it.x, it.y), stepNumber + 1)) return true
-                board[it.x][it.y] = -1
+                if (findSolution(it, board.step(it, stepNumber))) return true
+                board.backStep(it)
             }
         return false
     }
@@ -34,9 +32,18 @@ class Chessboard(
         }
     }
 
-    private fun isValidStep(x: Int, y: Int) =
-        x in 0..<size && y in 0..<size && board[x][y] == -1
+    private fun Array<IntArray>.step(p: Position, n: Int): Int {
+        val nextStepNumber = n + 1
+        this[p.x][p.y] = nextStepNumber
+        return nextStepNumber
+    }
 
+    private fun Array<IntArray>.backStep(p: Position) {
+        this[p.x][p.y] = -1
+    }
+
+    private fun isValidStep(p: Position) =
+        p.x in 0..<size && p.y in 0..<size && board[p.x][p.y] == -1
 }
 
 data class Position(val x: Int, val y: Int)
