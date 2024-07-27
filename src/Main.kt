@@ -1,7 +1,7 @@
 class Chessboard(
-    private val size: Int,
     private val startPosition: Position,
-    private val figureSteps: List<Position>
+    private val figureSteps: List<Position>,
+    private val size: Int = 8
 ) {
     private val board: Array<IntArray> = Array(size) { IntArray(size) { -1 } }
 
@@ -53,9 +53,8 @@ val horseSteps = listOf(
 )
 
 fun main() {
-    val chessboardSize = 8
     val startPosition = Position(0, 0)
-    val chessboard = Chessboard(chessboardSize, startPosition, horseSteps)
+    val chessboard = Chessboard(startPosition, horseSteps)
 
     if (chessboard.findSolution()) chessboard.print()
     else println("No solution exists from $startPosition")
