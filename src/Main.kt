@@ -35,11 +35,9 @@ class Chessboard(
         }
     }
 
-    private fun isValidStep(nextX: Int, nextY: Int) =
-        isValidPosition(nextX, nextY) && board[nextX][nextY] == -1
+    private fun isValidStep(x: Int, y: Int) =
+        x in 0..<size && y in 0..<size && board[x][y] == -1
 
-    private fun isValidPosition(x: Int, y: Int): Boolean =
-        x in 0..<size && y in 0..<size
 }
 
 data class Position(val x: Int, val y: Int)
