@@ -14,15 +14,14 @@ class Chessboard(
     fun findSolution(currentPosition: Position = startPosition, stepNumber: Int = 1): Boolean {
         if (stepNumber == size * size) return true
 
-        val validSteps = figureSteps
+        figureSteps
             .map { Position(currentPosition.x + it.x, currentPosition.y + it.y) }
             .filter { isValidStep(it.x, it.y) }
-
-        for (move in validSteps) {
-            board[move.x][move.y] = stepNumber + 1
-            if (findSolution(Position(move.x, move.y), stepNumber + 1)) return true
-            board[move.x][move.y] = -1
-        }
+            .forEach {
+                board[it.x][it.y] = stepNumber + 1
+                if (findSolution(Position(it.x, it.y), stepNumber + 1)) return true
+                board[it.x][it.y] = -1
+            }
         return false
     }
 
