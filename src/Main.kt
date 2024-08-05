@@ -16,6 +16,7 @@ class Chessboard(
         return figureSteps
             .map { currentPosition + it }
             .filter { isValidStep(it) }
+            .sortedBy { figureSteps.count { s -> isValidStep(it + s) } }
             .any {
                 if (findSolution(it, board.step(it, stepNumber))) return true
                 board.backStep(it)
